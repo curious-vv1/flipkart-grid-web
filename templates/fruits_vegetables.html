@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fruits & Vegetables</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="navbar">
+        <h1>Flipkart Grid Robotics Challenge: Team Red</h1>
+    </div>
+    <div class="navbar">
+        <div class="nav-buttons">
+            <a href="/">Product Info</a>
+            <a href="/generate-embeddings">Generate Embeddings</a>
+            <a href="/fruits-vegetables">Fruits & Vegetables</a>
+            <a href="/data">Data</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Fruits & Vegetables</h1>
+    </div>
+    <form
+      id="upload-fruits-form"
+      method="POST"
+      enctype="multipart/form-data"
+      action="/upload_fruits_vegetables"
+    >
+      <input type="file" name="video" accept="video/*" required />
+      <button type="submit">Upload Video</button>
+    </form>
+    <div id="fruits-video-container" style="margin-top: 20px; display: none">
+      <h2>Live Processed Video Feed</h2>
+      <img id="fruits-video-feed" style="width: 600px; height: auto" />
+    </div>
+    <script>
+      const fruitsForm = document.getElementById("upload-fruits-form");
+      const fruitsVideoContainer = document.getElementById("fruits-video-container");
+      const fruitsVideoFeed = document.getElementById("fruits-video-feed");
+
+      fruitsForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(fruitsForm);
+        const response = await fetch("/upload_fruits_vegetables", {
+          method: "POST",
+          body: formData,
+        });
+
+        if (response.ok) {
+          const filename = formData.get("video").name;
+          fruitsVideoContainer.style.display = "block";
+          fruitsVideoFeed.src = `/video_feed/${filename}`;
+        } else {
+          alert("Failed to upload video.");
+        }
+      });
+    </script>
+</body>
+</html>

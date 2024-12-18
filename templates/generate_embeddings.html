@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Embeddings</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="navbar">
+        <h1>Flipkart Grid Robotics Challenge: Team Red</h1>
+    </div>
+    <div class="navbar">
+        <div class="nav-buttons">
+            <a href="/">Product Info</a>
+            <a href="/generate-embeddings">Generate Embeddings</a>
+            <a href="/fruits-vegetables">Fruits & Vegetables</a>
+            <a href="/data">Data</a>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Generate Embeddings</h1>
+    </div>
+    <form id="upload-form" method="POST" enctype="multipart/form-data" action="/upload_image">
+        <input type="file" name="image" accept="image/*" required>
+        <button type="submit">Upload Image</button>
+    </form>
+    <div id="image-container" style="margin-top: 20px; display: none;">
+        <h2>Uploaded Image</h2>
+        <img id="uploaded-image" style="width: 300px; height: auto;">
+    </div>
+    <script>
+        const form = document.getElementById("upload-form");
+        const imageContainer = document.getElementById("image-container");
+        const uploadedImage = document.getElementById("uploaded-image");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch("/upload_image", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                const data = await response.json(); // Parse JSON response
+                const filename = data.filename;
+                uploadedImage.src = `/image_feed/${filename}`;
+                imageContainer.style.display = "block";
+            } else {
+                alert("Failed to upload image.");
+            }
+        });
+    </script>
+</body>
+</html>
