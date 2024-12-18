@@ -4,7 +4,7 @@ import numpy as np
 
 
 model = YOLO("best.pt")
-video_path = "sample_video.mp4"
+video_path = "output2.mp4"
 
 resize_factor = 3
 
