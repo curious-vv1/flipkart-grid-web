@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frame-by-Frame Video Processing</title>
+</head>
+<body>
+    <h1>Frame-by-Frame Video Processing</h1>
+    <form id="upload-form" method="POST" enctype="multipart/form-data" action="/upload">
+        <input type="file" name="video" accept="video/*" required>
+        <button type="submit">Upload Video</button>
+    </form>
+    <div id="video-container" style="margin-top: 20px; display: none;">
+        <h2>Live Processed Video Feed</h2>
+        <img id="video-feed" style="width: 600px; height: auto;" />
+    </div>
+    <script>
+        const form = document.getElementById("upload-form");
+        const videoContainer = document.getElementById("video-container");
+        const videoFeed = document.getElementById("video-feed");
+
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch("/upload", {
+                method: "POST",
+                body: formData,
+            });
+
+            if (response.ok) {
+                const filename = formData.get("video").name;
+                videoContainer.style.display = "block";
+                videoFeed.src = `/video_feed/${filename}`;
+            } else {
+                alert("Failed to upload video.");
+            }
+        });
+    </script>
+</body>
+</html>

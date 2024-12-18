@@ -1,0 +1,53 @@
+# Python-related ignores
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.pyd
+*.db
+*.sqlite3
+
+# Virtual environment
+venv/
+env/
+ENV/
+.venv/
+uploads/
+
+# Flask app configuration
+instance/
+.webassets-cache
+
+# Database files (SQLite)
+*.sqlite3
+
+# Logs
+*.log
+
+# Ignoring uploads (if you don't want to track uploaded files)
+uploads/
+
+# Test-related files (if using pytest or other tools)
+.coverage
+nosetests.xml
+coverage.xml
+*.cover
+
+# Distribution and packaging
+.Python
+build/
+dist/
+*.egg-info/
+
+# PyCharm IDE files
+.idea/
+
+# VSCode IDE files
+.vscode/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore other system-specific files
+.DS_Store
+Thumbs.db
